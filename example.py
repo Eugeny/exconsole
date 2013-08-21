@@ -3,8 +3,6 @@ class Tester:
         return a / b
 
     def inner(self):
-        while True:
-            pass
         self.divide(2, 0)
 
     def test(self):
@@ -13,4 +11,7 @@ class Tester:
 import exconsole
 exconsole.register()
 
-Tester().test()
+def fun():
+    Tester().test()
+
+fun()

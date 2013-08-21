@@ -48,16 +48,19 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
     else:
         print 'manual invocation'
 
-    top_frame = frame or extraceback.tb_frame
     stack = []
     locals = {}
     active_frame = 0
-    if top_frame:
-        current_frame = top_frame
+    if frame:
+        current_frame = frame
         while current_frame:
             stack.insert(0, current_frame)
             current_frame = current_frame.f_back
-
+    if extraceback:
+        current_tb = extraceback
+        while current_tb:
+            stack.append(current_tb.tb_frame)
+            current_tb = current_tb.tb_next
 
     import readline
     import code
@@ -115,6 +118,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             for line in lines
         )
 
+    active_frame = len(stack) - 1
     _cmd_stack()
     _cmd_frame(len(stack) - 1)
 
