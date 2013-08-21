@@ -1,3 +1,4 @@
+from __future__ import print_function
 import inspect
 import sys
 import signal
@@ -34,19 +35,20 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
     :param frame: interrupting signal frame
     """
 
-    print '\n'
-    print 'Activating emergency console'
-    print '----------------------------'
+    print('\n')
+    print('Activating emergency console')
+    print('----------------------------')
 
-    print 'Caused by:'
+    print('Caused by:')
     if signalnum:
         signals = dict((k, v) for v, k in signal.__dict__.iteritems() if v.startswith('SIG'))
-        print 'Signal', signals.get(signalnum, 'unknown')
+        print('Signal', signals.get(signalnum, 'unknown'))
     elif exception:
-        print exception.__class__.__name__
-        print exception.message
+        print(exception.__class__.__name__)
+        if hasattr(exception, 'message'):
+            print(exception.message)
     else:
-        print 'manual invocation'
+        print('manual invocation')
 
     stack = []
     locals = {}
@@ -67,7 +69,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
 
     def _cmd_stack():
         index = 0
-        print '\nStack frames:'
+        print('\nStack frames:')
         for frame in stack:
             s = '> ' if (active_frame == index) else '  '
             s += '[%s] ' % str(index).rjust(3)
@@ -76,11 +78,11 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             s += '\n' + ' ' * 10
             if frame.f_lineno - current_line < len(lines):
                 s += lines[frame.f_lineno - current_line].strip('\n')
-            print s
+            print(s)
             index += 1
 
     def _cmd_help():
-        print (
+        print((
             "Exconsole interactive emergency console\n"
             "Builtin commands:\n"
             " - _help()    this help\n"
@@ -88,14 +90,14 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             " - _f(index)  change current stack frame\n"
             " - _exc       exception object\n"
             " - Ctrl-D     leave console\n"
-        )
+        ))
 
     def _cmd_frame(index):
         if not isinstance(index, int):
-            print 'index must be int'
+            print('index must be int')
             return
         if index < 0 or index >= len(stack):
-            print 'index out of bounds'
+            print('index out of bounds')
             return
         frame = stack[index] 
         locals.clear()
@@ -107,16 +109,16 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             '_exc': exception,
         })
 
-        print 'On frame %i' % index
-        print 'Source:'
+        print('On frame %i' % index)
+        print('Source:')
 
         lines, current_line = inspect.getsourcelines(frame)
-        print ''.join(
+        print(''.join(
             '    ' +
             ('>>' if lines.index(line) == frame.f_lineno - current_line else '  ') +
             ' ' + line
             for line in lines
-        )
+        ))
 
     active_frame = len(stack) - 1
     _cmd_stack()
@@ -124,7 +126,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
 
     shell = code.InteractiveConsole(locals)
 
-    print 'Press Ctrl-D to leave console'
-    print 'Type "_help()"" for built-in commands'
+    print('Press Ctrl-D to leave console')
+    print('Type "_help()"" for built-in commands')
 
     shell.interact(banner='')
