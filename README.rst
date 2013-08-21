@@ -16,6 +16,7 @@ Quick start::
 
     do_dangerous_stuff()
 
+Console can be invoked by sending **SIGQUIT** or just pressing ``Ctrl-\``
 
 Example of work::
 
