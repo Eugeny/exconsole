@@ -20,6 +20,7 @@ lib64
 *.deb
 *.rpm
 debian/python*
+debian/files
 
 # Installer logs
 pip-log.txt
