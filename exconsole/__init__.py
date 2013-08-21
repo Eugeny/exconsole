@@ -1,0 +1,1 @@
+from exconsole.console import register, launch
