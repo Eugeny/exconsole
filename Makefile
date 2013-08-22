@@ -4,7 +4,7 @@ BUILDIR=$(CURDIR)/debian/python-exconsole
 RPMTOPDIR=$(CURDIR)/build
 PROJECT=python-exconsole
 DEBPROJECT=python-exconsole
-VERSION=0.1.2
+VERSION=0.1.3
 PREFIX=/usr
 
 all:
