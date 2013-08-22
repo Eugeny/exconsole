@@ -133,6 +133,6 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
     shell = code.InteractiveConsole(locals)
 
     print('Press Ctrl-D to leave console')
-    print('Type "_help()"" for built-in commands')
+    print('Type "_help()" for built-in commands')
 
     shell.interact(banner='')
