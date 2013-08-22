@@ -1,5 +1,6 @@
 from __future__ import print_function
 import inspect
+import pdb
 import sys
 import signal
 
@@ -88,9 +89,13 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             " - _help()    this help\n"
             " - _s()       display stack\n"
             " - _f(index)  change current stack frame\n"
+            " - _pdb()     launch PDB debugger\n"
             " - _exc       exception object\n"
             " - Ctrl-D     leave console\n"
         ))
+
+    def _cmd_pdb():
+        pdb.pm()
 
     def _cmd_frame(index):
         if not isinstance(index, int):
@@ -106,6 +111,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             '_help': _cmd_help,
             '_s': _cmd_stack,
             '_f': _cmd_frame,
+            '_pdb': _cmd_pdb,
             '_exc': exception,
         })
 
