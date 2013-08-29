@@ -3,9 +3,11 @@
 from distutils.core import setup
 from setuptools import find_packages
 
+import exconsole
+
 setup(
     name='python-exconsole',
-    version='__VERSION__',
+    version=exconsole.__version__,
     install_requires=[
     ],
     description='Emergency/postmortem Python console',

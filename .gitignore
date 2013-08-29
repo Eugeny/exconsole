@@ -38,4 +38,3 @@ nosetests.xml
 .project
 .pydevproject
 *.sublime*
-setup.py

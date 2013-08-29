@@ -4,7 +4,7 @@ BUILDIR=$(CURDIR)/debian/python-exconsole
 RPMTOPDIR=$(CURDIR)/build
 PROJECT=python-exconsole
 DEBPROJECT=python-exconsole
-VERSION=0.1.3
+VERSION=`python -c "from exconsole import __version__; print __version__"`
 PREFIX=/usr
 
 all:
@@ -54,7 +54,6 @@ upload-tgz: tgz
 
 tgz:
 	rm dist/*.tar.gz || true
-	cat setup.py.in | sed s/__VERSION__/$(VERSION)/g > setup.py
 	$(PYTHON) setup.py sdist 
 
 
