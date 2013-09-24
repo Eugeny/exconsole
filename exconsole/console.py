@@ -46,8 +46,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
         print('Signal', signals.get(signalnum, 'unknown'))
     elif exception:
         print(exception.__class__.__name__)
-        if hasattr(exception, 'message'):
-            print(exception.message)
+        print(exception)
     else:
         print('manual invocation')
 
