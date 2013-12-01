@@ -9,7 +9,11 @@ class Tester:
         self.inner()
 
 import exconsole
-exconsole.register()
+
+def testcmd(*args, **kwargs):
+    print 'Test!'
+
+exconsole.register(commands=[('_t', 'Test', testcmd)])
 
 def fun():
     Tester().test()

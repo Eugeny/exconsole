@@ -5,17 +5,19 @@ import sys
 import signal
 
 
-def register(reg_signal=signal.SIGQUIT, reg_unhandled=True):
+def register(reg_signal=signal.SIGQUIT, reg_unhandled=True, commands=[]):
     """
     Registers exconsole hooks
 
     :param reg_signal: if not None, register signal handler (default: ``signal.SIGQUIT``)
     :param reg_unhandled: if ``True``, register unhandled exception hook (``sys.excepthook``)
+    :param commands: list of custom commands/objects: (<local name>, <help string>, <function or object>)
     """
     if reg_signal:
         signal.signal(reg_signal, handle_quit)
     if reg_unhandled:
         sys.excepthook = handle_exception
+    launch.commands = commands
 
 
 def handle_exception(type, value, tb):
@@ -92,6 +94,7 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             " - _exc       exception object\n"
             " - Ctrl-D     leave console\n"
         ))
+        print('\n'.join(' - %s\t%s' % x[:2] for x in launch.commands))
 
     def _cmd_pdb():
         pdb.pm()
@@ -113,6 +116,8 @@ def launch(exception=None, extraceback=None, signalnum=None, frame=None):
             '_pdb': _cmd_pdb,
             '_exc': exception,
         })
+        for command in launch.commands:
+            locals[command[0]] = command[2]
 
         print('On frame %i' % index)
         print('Source:')
