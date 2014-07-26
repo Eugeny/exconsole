@@ -7,7 +7,7 @@ Installation from PyPI::
 
     pip install python-exconsole
 
-DEB and RPM packages are available in Ajenti repositories: http://docs.ajenti.org/man/install/general.html
+DEB and RPM packages are available in Ajenti repositories: http://support.ajenti.org/
 
 Quick start::
 
